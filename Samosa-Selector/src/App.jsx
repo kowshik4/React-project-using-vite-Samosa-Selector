@@ -6,12 +6,24 @@ const App = () => {
   const [count, setCount] = useState(0);
   const [multiplier, setMultiplier] = useState(1);
   const updateCount = () => setCount(count + multiplier);
-  const upgrades = [
-    { name: 'Double Stuffed 👯‍♀️', description: '2x per click', cost: 10 },
-    { name: 'Party Pack 🎉', description: '5x per click', cost: 100 },
-    { name: 'Full Feast 👩🏽‍🍳', description: '10x per click', cost: 1000 },
-  ];
 
+  const buyDoubleStuffed = () => {
+    if (count >= 10) {
+      setMultiplier(multiplier * 2);
+    }
+  }
+  const buyPartyPack = () => {
+    if (count >= 100) {
+      setMultiplier(multiplier * 5);
+      setCount(count - 100);
+    }
+  }
+  const buyFullFeast = () => {
+    if (count >= 1000) {
+      setMultiplier(multiplier * 10);
+      setCount(count - 1000);
+    }
+  }
   return (
     <div className="App">
       <div className="header">
@@ -21,20 +33,21 @@ const App = () => {
       <img src="https://thumbs.dreamstime.com/b/fresh-delicious-crispy-samosa-isolated-white-220143505.jpg" className="samosa" onClick={updateCount} />
       <h2>Upgrades</h2>
       <div className="container">
-        {upgrades.map((upgrade, index) => (
-          <div key={index} className="upgrade">
-            <h3>{upgrade.name}</h3>
-            <p>{upgrade.description}</p>
-            <p>Cost: {upgrade.cost}</p>
-            <button onClick={() => {
-              if (count >= upgrade.cost) {
-                setCount(count - upgrade.cost);
-                setMultiplier(multiplier * (index + 2));
-              }
-            }}>Buy</button>
+        <div className="upgrade">
+            <h3>Double Stuffed 👯‍♀️</h3>
+            <p>2x per click</p>
+            <button onClick={buyDoubleStuffed}>10 samosas</button>
           </div>
-        ))}
-
+          <div className="upgrade">
+            <h3>Party Pack 🎉</h3>
+            <p>5x per click</p>
+            <button onClick={buyPartyPack}>100 samosas</button>
+          </div>
+          <div className="upgrade">
+            <h3>Full Feast 👩🏽‍🍳</h3>
+            <p>10x per click</p>
+            <button onClick={buyFullFeast}>1000 samosas</button>
+          </div>
       </div>
     </div>
   )
